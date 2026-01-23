@@ -31,6 +31,33 @@ public class UserService {
     }
 
     /**
+     * 更新指定ID的用户信息
+     * @param id 用户ID
+     * @param username 新的用户名（可为null，表示不更新）
+     * @param email 新的邮箱（可为null，表示不更新）
+     * @return 更新后的用户对象
+     * @throws RuntimeException 如果用户不存在
+     */
+    @Transactional
+    public User updateUser(Long id, String username, String email) {
+        // 1. 先查找用户是否存在
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("用户不存在，ID: " + id));
+
+        // 2. 更新用户信息（如果参数不为null才更新）
+        if (username != null && !username.trim().isEmpty()) {
+            user.setUsername(username);
+        }
+
+        if (email != null && !email.trim().isEmpty()) {
+            user.setEmail(email);
+        }
+
+        // 3. 保存更新（JPA会自动检测到对象变化并生成UPDATE语句）
+        return userRepository.save(user);
+    }
+
+    /**
      * 获取所有用户列表
      */
     public List<User> getAllUsers() {

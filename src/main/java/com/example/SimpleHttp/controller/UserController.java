@@ -38,6 +38,29 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(
+            @PathVariable Long id,  // 从路径中获取用户ID
+            @RequestBody Map<String, String> requestBody) {  // 获取请求体JSON
+
+        try {
+            // 从请求体中获取参数（允许部分更新）
+            String username = requestBody.get("username");
+            String email = requestBody.get("email");
+
+            // 调用Service的更新方法
+            User updatedUser = userService.updateUser(id, username, email);
+
+            // 返回更新后的用户信息
+            return ResponseEntity.ok(updatedUser);
+
+        } catch (RuntimeException e) {
+            // 用户不存在或其他错误
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", e.getMessage()));
+        }
+    }
+
     /**
      * 获取所有用户
      * GET /api/users
