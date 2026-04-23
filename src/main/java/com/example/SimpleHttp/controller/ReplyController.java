@@ -15,13 +15,18 @@ import java.util.Map;
 public class ReplyController {
 
     @Autowired
+    //这个注解是在项目启动的时候直接new 一个ReplyService，然后项目过程中就直接使用replyService的方法就好了，不需要new
     private ReplyService replyService;
 
     /**
      * 创建新记录
      * POST /api/replies
      */
-    @PostMapping
+    @PostMapping//用post方法
+    //ResponseEntity<Reply> 这个方法返回一个 HTTP 响应，响应体里是一个 Reply 对象
+    //ResponseEntity是Springboot封装好的标准HTTP返回，状态码 + 响应头 + 数据，Reply是自己定义的返回内容
+    //Springbootweb项目会自带Jackson，干的事情是把Java 对象 ↔ JSON 自动互转，当然有一定的要求，但我返回JAVA对象它就会转成JSON，因为HTTP接收只认JSON、字符串、HTML、图片，那么JAVA对象就会自动转成json，最主要的是@RestController，写了这个项目就知道我是在写接口，那么就会自动转换
+    //@RequestBody Map<String, String> requestBody 先通过@RequestBody把送进来的请求body转成JSON
     public ResponseEntity<Reply> createReply(@RequestBody Map<String, String> requestBody) {
         String req = requestBody.get("req");
         String rep = requestBody.get("rep");
