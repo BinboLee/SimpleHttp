@@ -10,7 +10,7 @@ import java.util.List;
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     // 根据Req查询
-    List<Reply> findByReq(String req);
+    List<Reply> findByReq(String req);//这是JPA标准写法，List<Reply>表示可能返回多个Reply结果，因为查询条件可能有多个，findByReq(String req)是JPA标准写法，会自动转换成sql，SELECT * FROM reply WHERE req = ?
 
     // 根据Rep查询
     List<Reply> findByRep(String rep);

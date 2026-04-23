@@ -35,7 +35,10 @@ public class ReplyController {
             return ResponseEntity.badRequest().build();
         }
 
+        //取json报文，判断空，如果空就返回报错，如果不空就正常处理
+
         Reply reply = replyService.createReply(req, rep);
+        //把送起来的参数交给entity
         return ResponseEntity.status(HttpStatus.CREATED).body(reply);
     }
 

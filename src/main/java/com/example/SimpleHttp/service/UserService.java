@@ -79,7 +79,7 @@ public class UserService {
      */
     @Transactional
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        userRepository.deleteById(id);//如果想自定义sql，就用@Query
     }
 
     /**

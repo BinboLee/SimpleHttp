@@ -17,10 +17,10 @@ public class ReplyService {
     /**
      * 创建一条记录
      */
-    @Transactional
+    @Transactional//数据库操作，要么成功，要么失败回滚
     public Reply createReply(String req, String rep) {
         Reply reply = new Reply(req, rep);
-        return replyRepository.save(reply);
+        return replyRepository.save(reply);//replyRepository.save(reply)是在把数据存到数据库，return是return数据库记录完整数据
     }
 
     /**
